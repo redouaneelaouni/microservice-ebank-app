@@ -30,7 +30,7 @@ public class AccountRestController {
     }
     @GetMapping("/accounts/{id}")
     public BankAccount bankAccountById(@PathVariable String id){
-        BankAccount bankAccount= accountRepository.findById(id).get();
+        BankAccount bankAccount= accountRepository.findById(id).isPresent() ? accountRepository.findById(id).get() : null;
         Customer customer=customerRestClient.findCustomerById(bankAccount.getCustomerId());
         bankAccount.setCustomer(customer);
         return bankAccount;
